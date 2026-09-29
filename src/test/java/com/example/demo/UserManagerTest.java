@@ -91,4 +91,42 @@ public class UserManagerTest {
         assertThat(manager.getUserList()).isEmpty();
         assertThat(manager.getUserMap()).isEmpty();
     }
+
+
+    @Test
+    public void ListとMapの初期状態を確認するテスト() {
+        UserManager manager = UserManager.getInstance();
+        manager.deleteAllUser();
+
+        assertThat(manager.getUserList()).isNotNull();
+        assertThat(manager.getUserList()).isEmpty();
+        assertThat(manager.getUserMap()).isNotNull();
+        assertThat(manager.getUserMap()).isEmpty();
+    }
+
+    @Test
+    public void Listの登録順を確認するテスト() {
+        UserManager manager = UserManager.getInstance();
+        manager.deleteAllUser();
+
+        User user1 = new User("001");
+        User user2 = new User("002");
+        manager.setUserToList(user1);
+        manager.setUserToList(user2);
+
+        assertThat(manager.getUserList()).containsExactly(user1, user2);
+    }
+
+    @Test
+    public void Mapのキーを確認するテスト() {
+        UserManager manager = UserManager.getInstance();
+        manager.deleteAllUser();
+
+        User user1 = new User("001");
+        User user2 = new User("002");
+        manager.setUserToMap(user1);
+        manager.setUserToMap(user2);
+
+        assertThat(manager.getUserMap()).containsKeys("001", "002");
+    }
 }
